@@ -224,6 +224,13 @@ bool App::handleEvent(const Window::Event& ev) {
 		// and "Go to definition" to jump directly to where the identifier is defined.
 		if (ev.key == FW_KEY_LEFT)
 			myTranslation.x -= 0.05;
+		else if (ev.key == FW_KEY_RIGHT)
+			myTranslation.x += 0.05;
+
+		if (ev.key == FW_KEY_DOWN)
+			myTranslation.y -= 0.05;
+		else if (ev.key == FW_KEY_UP)
+			myTranslation.y += 0.05;
 
 		if (ev.key == FW_KEY_HOME)
 			camera_rotation_angle_ -= 0.05 * FW_PI;
