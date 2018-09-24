@@ -494,9 +494,24 @@ vector<Vertex> App::loadObjFileModel(string filename) {
 			// Read the three vertex coordinates (x, y, z) into 'v'.
 			// Store a copy of 'v' in 'positions'.
 			// See std::vector documentation for push_back.
+
+			iss >> s;
+			v.x = stof(s);
+			iss >> s;
+			v.y = stof(s);
+			iss >> s;
+			v.z = stof(s);
+			positions.push_back(v);
 		} else if (s == "vn") { // normal
 			// YOUR CODE HERE (R4)
 			// Similar to above.
+			iss >> s;
+			v.x = stof(s);
+			iss >> s;
+			v.y = stof(s);
+			iss >> s;
+			v.z = stof(s);
+			normals.push_back(v);
 		} else if (s == "f") { // face
 			// YOUR CODE HERE (R4)
 			// Read the indices representing a face and store it in 'faces'.
@@ -516,6 +531,27 @@ vector<Vertex> App::loadObjFileModel(string filename) {
 
 			// It might be a good idea to print the indices to see that they were read correctly.
 			// cout << f[0] << " " << f[1] << " " << f[2] << " " << f[3] << " " << f[4] << " " << f[5] << endl;
+
+			iss >> s;
+			f[0] = stoi(s) - 1;
+			iss >> sink;
+			iss >> s;
+			f[1] = stoi(s) - 1;
+
+			iss >> s;
+			f[2] = stoi(s) - 1;
+			iss >> sink;
+			iss >> s;
+			f[3] = stoi(s) - 1;
+
+			iss >> s;
+			f[4] = stoi(s) - 1;
+			iss >> sink;
+			iss >> s;
+			f[5] = stoi(s) - 1;
+
+			faces.push_back(f);
+
 		}
 	}
 	common_ctrl_.message(("Loaded mesh from " + filename).c_str());
