@@ -67,6 +67,16 @@ vector<Vertex> unpackIndexedData(
 		// YOUR CODE HERE (R3)
 		// Unpack the indexed data into a vertex array. For every face, you have to
 		// create three vertices and add them to the vector 'vertices'.
+		Vertex v0, v1, v2;
+		v0.position = positions[f[0]];
+		v0.normal = normals[f[1]];
+		v1.position = positions[f[2]];
+		v1.normal = normals[f[3]];
+		v2.position = positions[f[4]];
+		v2.normal = normals[f[5]];
+
+		vertices.push_back(v0); vertices.push_back(v1); vertices.push_back(v2);
+
 
 		// f[0] is the index of the position of the first vertex
 		// f[1] is the index of the normal of the first vertex
@@ -120,7 +130,7 @@ vector<Vertex> loadUserGeneratedModel() {
 	// Empty array of Vertex structs; every three vertices = one triangle
 	vector<Vertex> vertices;
 	
-	Vertex v0, v1, v2;
+	Vertex v0, v1, v2, v3;
 
 	// Generate one face at a time
 	for(auto i = 0u; i < faces; ++i)	{
@@ -140,15 +150,16 @@ vector<Vertex> loadUserGeneratedModel() {
 		// Then we add the vertices to the array.
 		// .push_back() grows the size of the vector by one, copies its argument,
 		// and places the copy at the back of the vector.
-		v1.position = Vec3f(0.0f, 0.0f, 0.0f);//this is the tip. All faces share this
-		v0.position = Vec3f(radius*FW::cos(angle_increment*i), -height, FW::sin(angle_increment*i)*radius);
+		
+		v0.position = Vec3f(0.0f, 0.0f, 0.0f);//this is the tip. All faces share this
+		v1.position = Vec3f(radius*FW::cos(angle_increment*i), -height, FW::sin(angle_increment*i)*radius);
 		v2.position = Vec3f(radius*FW::cos(angle_increment*(i + 1)), -height, FW::sin(angle_increment*(i + 1))*radius);
+		//v3.position = Vec3f(0.0f, -1.0f, 0.0f); // this is a demo base
 
+		v0.normal = v1.normal = v2.normal = (v1.position - v0.position).cross((v1.position - v2.position)).normalized();
+		//v0.normal = v1.normal = v2.normal =v3.normal =  (v0.position - v1.position).cross((v0.position - v2.position)).normalized();
 
-
-		v0.normal = v1.normal = v2.normal = (v0.position - v1.position).cross((v0.position - v2.position)).normalized();
-
-
+		
 		/*
 		v0.normal = normalize(cross(v1.position - v0.position, v2.position - v0.position));
 		v1.normal = normalize(cross(v1.position - a, v2.position - a));
@@ -169,7 +180,8 @@ vector<Vertex> loadUserGeneratedModel() {
 
 
 
-		vertices.push_back(v0); vertices.push_back(v1); vertices.push_back(v2);
+		vertices.push_back(v0); vertices.push_back(v1); vertices.push_back(v2); 
+		//vertices.push_back(v3);
 	}
 	return vertices;
 }
