@@ -140,6 +140,35 @@ vector<Vertex> loadUserGeneratedModel() {
 		// Then we add the vertices to the array.
 		// .push_back() grows the size of the vector by one, copies its argument,
 		// and places the copy at the back of the vector.
+		v1.position = Vec3f(0.0f, 0.0f, 0.0f);//this is the tip. All faces share this
+		v0.position = Vec3f(radius*FW::cos(angle_increment*i), -height, FW::sin(angle_increment*i)*radius);
+		v2.position = Vec3f(radius*FW::cos(angle_increment*(i + 1)), -height, FW::sin(angle_increment*(i + 1))*radius);
+
+
+
+		v0.normal = v1.normal = v2.normal = (v0.position - v1.position).cross((v0.position - v2.position)).normalized();
+
+
+		/*
+		v0.normal = normalize(cross(v1.position - v0.position, v2.position - v0.position));
+		v1.normal = normalize(cross(v1.position - a, v2.position - a));
+		v2.normal = normalize(cross(v1.position - a, v2.position - a));
+
+		v0.normal = v1.normal = v2.normal = Vec3f((v0.position - v1.position).cross((v0.position - v2.position))).normalized();
+		v0.normal = v1.normal = v2.normal = (v0.position - v1.position).cross((v0.position - v2.position)).normalized();
+		v0.normal = v1.normal = v2.normal = normalize(((v0.position - v1.position).cross((v0.position - v2.position))));
+
+		v0.normal = Vec3f((v0.position - v1.position).cross((v0.position - v2.position))).normalized();
+		v1.normal = Vec3f((v0.position - v1.position).cross((v0.position - v2.position))).normalized();
+		v2.normal = Vec3f((v0.position - v1.position).cross((v0.position - v2.position))).normalized();
+
+		Hmm i tried all these methods of normalizing and i still dont see any light effect on my cone : ( -- answer: radius in wrong place :D
+		*/
+
+
+
+
+
 		vertices.push_back(v0); vertices.push_back(v1); vertices.push_back(v2);
 	}
 	return vertices;
@@ -445,6 +474,8 @@ vector<Vertex> App::loadObjFileModel(string filename) {
 		// Read the first token from the line into string 's'.
 		// It identifies the type of object (vertex or normal or ...)
 		iss >> s;
+
+		
 
 		if (s == "v") { // vertex position
 			// YOUR CODE HERE (R4)
