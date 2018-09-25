@@ -273,6 +273,17 @@ bool App::handleEvent(const Window::Event& ev) {
 		else if (ev.key == FW_KEY_UP)
 			myTranslation.y += 0.05;
 
+
+		else if (ev.key == FW_KEY_A)
+			Scale_X += 0.1;
+		else if (ev.key == FW_KEY_Z)
+			Scale_X -= 0.1;
+		else if (ev.key == FW_KEY_PERIOD)
+			Rotation_Y += 0.1;
+		else if (ev.key == FW_KEY_COMMA)
+			Rotation_Y -= 0.1;
+
+
 		if (ev.key == FW_KEY_HOME)
 			camera_rotation_angle_ -= 0.05 * FW_PI;
 		else if (ev.key == FW_KEY_END)
@@ -436,6 +447,18 @@ void App::render() {
 	// YOUR CODE HERE (R1)
 	// Set the model space -> world space transform to translate the model according to user input.
 	Mat4f modelToWorld;
+	
+
+	rot = Mat3f::rotation(Vec3f(0, 1, 0), -Rotation_Y);
+	Mat4f Rotation; 
+	Rotation.setCol(0, Vec4f(rot.getCol(0), 0));
+	Rotation.setCol(1, Vec4f(rot.getCol(1), 0));
+	Rotation.setCol(2, Vec4f(rot.getCol(2), 0));
+	Rotation.setCol(3, Vec4f(0, 0, 0, 1));
+	Mat4f Scale; 
+	Scale.set(0, 0, Scale_X);
+	modelToWorld *= Rotation;
+	modelToWorld *= Scale;
 	modelToWorld.setCol(3, myTranslation);
 
 	// Draw the model with your model-to-world transformation.

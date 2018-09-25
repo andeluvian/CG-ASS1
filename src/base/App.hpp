@@ -62,6 +62,10 @@ private:
 
 	float				camera_rotation_angle_;
 	Vec4f myTranslation = Vec4f(0, 0, 0, 1);
+	F32 Scale_X = 1;
+	F32 Rotation_Y = 0;
+
+
 	// YOUR CODE HERE (R1)
 	// Add a class member to store the current translation.
 
